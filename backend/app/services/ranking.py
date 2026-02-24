@@ -11,6 +11,20 @@ from app.rag.evaluator import evaluate_candidate_with_gemini, EVAL_PROMPT_VERSIO
 from app.utils.fingerprint import make_fingerprint
 
 
+def _mark_ranked_applications(job_id: str, run_id: str, app_ids: list[str]) -> None:
+    if not app_ids:
+        return
+
+    applications_col().update_many(
+        {
+            "job_id": job_id,
+            "_id": {"$in": [ObjectId(app_id) for app_id in app_ids]},
+            "processing_status": {"$in": ["embedded", "ranked"]},
+        },
+        {"$set": {"processing_status": "ranked", "ranked_at": datetime.utcnow(), "latest_run_id": run_id}},
+    )
+
+
 def run_ranking(job_id: str, per_candidate_k: int = 3, top_k: int = 8):
     # 1) Load job (JD)
     job = jobs_col().find_one({"_id": ObjectId(job_id)})
@@ -38,6 +52,8 @@ def run_ranking(job_id: str, per_candidate_k: int = 3, top_k: int = 8):
         sort=[("created_at", -1)]
     )
     if latest and latest.get("fingerprint") == fingerprint:
+        cached_app_ids = [r.get("application_id") for r in latest.get("results", []) if r.get("application_id")]
+        _mark_ranked_applications(job_id=job_id, run_id=latest.get("run_id", ""), app_ids=cached_app_ids)
         return latest
 
     # 5) Retrieve evidence from Qdrant (JD -> chunks per application)
@@ -100,9 +116,7 @@ def run_ranking(job_id: str, per_candidate_k: int = 3, top_k: int = 8):
     ranking_results_col().insert_one(run_doc)
 
     # 9) Update applications status -> ranked (only those we ranked)
-    applications_col().update_many(
-        {"job_id": job_id, "processing_status": "embedded"},
-        {"$set": {"processing_status": "ranked", "ranked_at": datetime.utcnow(), "latest_run_id": run_id}}
-    )
+    ranked_app_ids = [r["application_id"] for r in results if r.get("application_id")]
+    _mark_ranked_applications(job_id=job_id, run_id=run_id, app_ids=ranked_app_ids)
 
     return run_doc

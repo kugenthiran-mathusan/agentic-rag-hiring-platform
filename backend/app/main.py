@@ -6,6 +6,8 @@ from loguru import logger
 from app.services.qdrant_client import ensure_collection
 from app.rag.embeddings import get_embedder
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from pathlib import Path
 
 def create_app() -> FastAPI:
     setup_logging(settings.APP_ENV)
@@ -28,6 +30,11 @@ def create_app() -> FastAPI:
 
     for r in all_routers:
         app.include_router(r)
+
+    # Serve uploaded CV files for HR preview/download.
+    upload_dir = Path(settings.UPLOAD_DIR)
+    upload_dir.mkdir(parents=True, exist_ok=True)
+    app.mount("/storage", StaticFiles(directory=str(upload_dir)), name="storage")
 
     @app.on_event("startup")
     async def startup_event():

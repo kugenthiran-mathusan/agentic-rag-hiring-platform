@@ -213,3 +213,158 @@
 2026-02-24 22:55:13.310 | INFO     | app.main:startup_event:41 - Backend starting up...
 2026-02-24 22:55:13.310 | INFO     | app.main:startup_event:42 - ENV=dev
 2026-02-24 22:55:25.672 | INFO     | app.main:startup_event:46 - Qdrant collection ready: 384 dims
+2026-02-25 12:34:03.065 | INFO     | app.main:startup_event:41 - Backend starting up...
+2026-02-25 12:34:03.065 | INFO     | app.main:startup_event:42 - ENV=dev
+2026-02-25 12:34:12.704 | INFO     | app.main:startup_event:46 - Qdrant collection ready: 384 dims
+2026-02-25 12:43:00.973 | INFO     | app.main:startup_event:41 - Backend starting up...
+2026-02-25 12:43:00.973 | INFO     | app.main:startup_event:42 - ENV=dev
+2026-02-25 12:43:09.124 | INFO     | app.main:startup_event:46 - Qdrant collection ready: 384 dims
+2026-02-25 12:43:21.234 | INFO     | app.main:startup_event:41 - Backend starting up...
+2026-02-25 12:43:21.234 | INFO     | app.main:startup_event:42 - ENV=dev
+2026-02-25 12:43:29.679 | INFO     | app.main:startup_event:46 - Qdrant collection ready: 384 dims
+2026-02-25 12:47:18.779 | INFO     | app.main:startup_event:41 - Backend starting up...
+2026-02-25 12:47:18.780 | INFO     | app.main:startup_event:42 - ENV=dev
+2026-02-25 12:47:26.996 | INFO     | app.main:startup_event:46 - Qdrant collection ready: 384 dims
+2026-02-25 12:47:39.890 | INFO     | app.main:startup_event:41 - Backend starting up...
+2026-02-25 12:47:39.890 | INFO     | app.main:startup_event:42 - ENV=dev
+2026-02-25 12:47:48.439 | INFO     | app.main:startup_event:46 - Qdrant collection ready: 384 dims
+2026-02-25 12:47:59.037 | INFO     | app.main:startup_event:41 - Backend starting up...
+2026-02-25 12:47:59.037 | INFO     | app.main:startup_event:42 - ENV=dev
+2026-02-25 12:48:07.431 | INFO     | app.main:startup_event:46 - Qdrant collection ready: 384 dims
+2026-02-25 12:48:30.936 | ERROR    | app.api.routes.ranking:rank_candidates:28 - Gemini ranking runtime error for job_id=699e9f731464f21f734d41df
+Traceback (most recent call last):
+
+  File "D:\AI_ML_PROJECTS\agentic-rag-hiring-platform\backend\app\services\ranking.py", line 78, in run_ranking
+    eval_out = evaluate_candidate(
+               └ <function evaluate_candidate at 0x000001BB09E0E160>
+
+  File "D:\AI_ML_PROJECTS\agentic-rag-hiring-platform\backend\app\rag\evaluator.py", line 79, in evaluate_candidate
+    return evaluate_candidate_with_gemini(
+           └ <function evaluate_candidate_with_gemini at 0x000001BB08C90AE0>
+
+  File "D:\AI_ML_PROJECTS\agentic-rag-hiring-platform\backend\app\rag\evaluator.py", line 65, in evaluate_candidate_with_gemini
+    result = generate_json(model=(model or settings.GEMINI_MODEL), prompt=prompt, temperature=0.2)
+             │                    │        │        │                     └ 'You are an experienced recruiter evaluating ONE candidate for ONE job.\nYou MUST use ONLY the evidence provided. If evidence...
+             │                    │        │        └ 'gemini-2.5-flash'
+             │                    │        └ Settings(MONGO_URI='mongodb://admin:admin@localhost:27017/hiring?authSource=admin', MONGO_DB='hiring', QDRANT_URL='http://loc...
+             │                    └ 'gemini-2.5-flash'
+             └ <function generate_json at 0x000001BB08C90C20>
+
+  File "D:\AI_ML_PROJECTS\agentic-rag-hiring-platform\backend\app\services\llm\gemini_client.py", line 18, in generate_json
+    resp = client.models.generate_content(
+           │      └ <property object at 0x000001BB0AB44450>
+           └ <google.genai.client.Client object at 0x000001BB0AC7F0E0>
+
+  File "D:\AI_ML_PROJECTS\agentic-rag-hiring-platform\backend\.venv\Lib\site-packages\google\genai\models.py", line 5474, in generate_content
+    response = self._generate_content(
+               │    └ <function Models._generate_content at 0x000001BB0A7A8AE0>
+               └ <google.genai.models.Models object at 0x000001BB0B1882F0>
+  File "D:\AI_ML_PROJECTS\agentic-rag-hiring-platform\backend\.venv\Lib\site-packages\google\genai\models.py", line 4214, in _generate_content
+    response = self._api_client.request(
+               │    │           └ <function BaseApiClient.request at 0x000001BB0A72F420>
+               │    └ <google.genai._api_client.BaseApiClient object at 0x000001BB0AC7F230>
+               └ <google.genai.models.Models object at 0x000001BB0B1882F0>
+  File "D:\AI_ML_PROJECTS\agentic-rag-hiring-platform\backend\.venv\Lib\site-packages\google\genai\_api_client.py", line 1396, in request
+    response = self._request(http_request, http_options, stream=False)
+               │    │        │             └ None
+               │    │        └ HttpRequest(headers={'Content-Type': 'application/json', 'x-goog-api-key': 'AIzaSyB4jyOByFOGdad_HJYsm83XrlOp7P1ec74', 'user-a...
+               │    └ <function BaseApiClient._request at 0x000001BB0A72F1A0>
+               └ <google.genai._api_client.BaseApiClient object at 0x000001BB0AC7F230>
+  File "D:\AI_ML_PROJECTS\agentic-rag-hiring-platform\backend\.venv\Lib\site-packages\google\genai\_api_client.py", line 1232, in _request
+    return self._retry(self._request_once, http_request, stream)  # type: ignore[no-any-return]
+           │    │      │    │              │             └ False
+           │    │      │    │              └ HttpRequest(headers={'Content-Type': 'application/json', 'x-goog-api-key': 'AIzaSyB4jyOByFOGdad_HJYsm83XrlOp7P1ec74', 'user-a...
+           │    │      │    └ <function BaseApiClient._request_once at 0x000001BB0A72F100>
+           │    │      └ <google.genai._api_client.BaseApiClient object at 0x000001BB0AC7F230>
+           │    └ <Retrying object at 0x1bb0c5ae510 (stop=<tenacity.stop.stop_after_attempt object at 0x000001BB0C5AE660>, wait=<tenacity.wait....
+           └ <google.genai._api_client.BaseApiClient object at 0x000001BB0AC7F230>
+  File "D:\AI_ML_PROJECTS\agentic-rag-hiring-platform\backend\.venv\Lib\site-packages\tenacity\__init__.py", line 470, in __call__
+    do = self.iter(retry_state=retry_state)
+         │    │                └ <RetryCallState 1902856670912: attempt #1; slept for 0.0; last result: failed (ClientError 403 PERMISSION_DENIED. {'error': {...
+         │    └ <function BaseRetrying.iter at 0x000001BB0A701940>
+         └ <Retrying object at 0x1bb0c5ae510 (stop=<tenacity.stop.stop_after_attempt object at 0x000001BB0C5AE660>, wait=<tenacity.wait....
+  File "D:\AI_ML_PROJECTS\agentic-rag-hiring-platform\backend\.venv\Lib\site-packages\tenacity\__init__.py", line 371, in iter
+    result = action(retry_state)
+             │      └ <RetryCallState 1902856670912: attempt #1; slept for 0.0; last result: failed (ClientError 403 PERMISSION_DENIED. {'error': {...
+             └ <function BaseRetrying._post_stop_check_actions.<locals>.exc_check at 0x000001BB0AC6B420>
+  File "D:\AI_ML_PROJECTS\agentic-rag-hiring-platform\backend\.venv\Lib\site-packages\tenacity\__init__.py", line 413, in exc_check
+    raise retry_exc.reraise()
+          │         └ <function RetryError.reraise at 0x000001BB0A700EA0>
+          └ RetryError(<Future at 0x1bb0b189160 state=finished raised ClientError>)
+  File "D:\AI_ML_PROJECTS\agentic-rag-hiring-platform\backend\.venv\Lib\site-packages\tenacity\__init__.py", line 184, in reraise
+    raise self.last_attempt.result()
+          │    │            └ <function Future.result at 0x000001BB41F7CEA0>
+          │    └ <Future at 0x1bb0b189160 state=finished raised ClientError>
+          └ RetryError(<Future at 0x1bb0b189160 state=finished raised ClientError>)
+  File "C:\Users\kugen\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           └ None
+  File "C:\Users\kugen\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+          └ None
+  File "D:\AI_ML_PROJECTS\agentic-rag-hiring-platform\backend\.venv\Lib\site-packages\tenacity\__init__.py", line 473, in __call__
+    result = fn(*args, **kwargs)
+             │   │       └ {}
+             │   └ (HttpRequest(headers={'Content-Type': 'application/json', 'x-goog-api-key': 'AIzaSyB4jyOByFOGdad_HJYsm83XrlOp7P1ec74', 'user-...
+             └ <bound method BaseApiClient._request_once of <google.genai._api_client.BaseApiClient object at 0x000001BB0AC7F230>>
+  File "D:\AI_ML_PROJECTS\agentic-rag-hiring-platform\backend\.venv\Lib\site-packages\google\genai\_api_client.py", line 1209, in _request_once
+    errors.APIError.raise_for_response(response)
+    │      │        │                  └ <Response [403 Forbidden]>
+    │      │        └ <classmethod(<function APIError.raise_for_response at 0x000001BB0A718360>)>
+    │      └ <class 'google.genai.errors.APIError'>
+    └ <module 'google.genai.errors' from 'D:\\AI_ML_PROJECTS\\agentic-rag-hiring-platform\\backend\\.venv\\Lib\\site-packages\\goog...
+  File "D:\AI_ML_PROJECTS\agentic-rag-hiring-platform\backend\.venv\Lib\site-packages\google\genai\errors.py", line 134, in raise_for_response
+    cls.raise_error(response.status_code, response_json, response)
+    │   │           │        │            │              └ <Response [403 Forbidden]>
+    │   │           │        │            └ {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_...
+    │   │           │        └ 403
+    │   │           └ <Response [403 Forbidden]>
+    │   └ <classmethod(<function APIError.raise_error at 0x000001BB0A7184A0>)>
+    └ <class 'google.genai.errors.APIError'>
+  File "D:\AI_ML_PROJECTS\agentic-rag-hiring-platform\backend\.venv\Lib\site-packages\google\genai\errors.py", line 159, in raise_error
+    raise ClientError(status_code, response_json, response)
+          │           │            │              └ <Response [403 Forbidden]>
+          │           │            └ {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_...
+          │           └ 403
+          └ <class 'google.genai.errors.ClientError'>
+
+google.genai.errors.ClientError: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+
+
+The above exception was the direct cause of the following exception:
+
+
+Traceback (most recent call last):
+
+  File "C:\Users\kugen\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 1014, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000001BB41B65F80>
+    └ <WorkerThread(AnyIO worker thread, started 25200)>
+  File "C:\Users\kugen\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 1043, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000001BB0B058400>
+    └ <WorkerThread(AnyIO worker thread, started 25200)>
+  File "D:\AI_ML_PROJECTS\agentic-rag-hiring-platform\backend\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 986, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function rank_candidates at 0x000001BB08C904A0>, job_id='699e9f731464f21f734d41df', per_candidate_k=3, top...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000001BB0C5A4D80>
+
+> File "D:\AI_ML_PROJECTS\agentic-rag-hiring-platform\backend\app\api\routes\ranking.py", line 15, in rank_candidates
+    doc = run_ranking(job_id=job_id, per_candidate_k=per_candidate_k, top_k=top_k)
+          │                  │                       │                      └ 8
+          │                  │                       └ 3
+          │                  └ '699e9f731464f21f734d41df'
+          └ <function run_ranking at 0x000001BB09E0F920>
+
+  File "D:\AI_ML_PROJECTS\agentic-rag-hiring-platform\backend\app\services\ranking.py", line 85, in run_ranking
+    raise RuntimeError(
+
+RuntimeError: Gemini ranking failed for candidate 'Mathusan Kugenthiran' (application_id=699e9f951464f21f734d41e0): 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+2026-02-25 12:50:04.333 | INFO     | app.main:startup_event:41 - Backend starting up...
+2026-02-25 12:50:04.333 | INFO     | app.main:startup_event:42 - ENV=dev
+2026-02-25 12:50:13.636 | INFO     | app.main:startup_event:46 - Qdrant collection ready: 384 dims
+2026-02-25 12:58:59.777 | INFO     | app.main:startup_event:41 - Backend starting up...
+2026-02-25 12:58:59.777 | INFO     | app.main:startup_event:42 - ENV=dev
+2026-02-25 12:59:08.142 | INFO     | app.main:startup_event:46 - Qdrant collection ready: 384 dims
